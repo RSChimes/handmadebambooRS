@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — RS Chimes™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#F7F3EE;--sand-2:#F1EAE0;--sand-3:#EBE3D6;
+  --ink:#211C16;--ink-soft:#4A4239;--ink-mute:#8A8073;
+  --line:#DBD2C4;--line-soft:#E6DECF;
+  --forest:#41553F;--forest-deep:#2F3F2E;--forest-soft:#5C7058;
+  --dark:#1C1A15;--paper:#FCFAF6;--red:#9A4434;
+  --r:3px;--maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--sand);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:'Spectral',Georgia,serif;font-weight:500;line-height:1.1;letter-spacing:-0.01em}
+.mono{font-family:'Spline Sans Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--ink-mute)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+.announce{background:var(--forest-deep);color:#EDE6D8;font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-align:center;padding:9px 16px}
+
+header{position:sticky;top:0;z-index:20;background:rgba(247,243,238,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:'Spectral',serif;font-weight:600;font-size:21px;display:flex;align-items:baseline;gap:2px}
+.brand .tm{font-family:'Spline Sans Mono',monospace;font-size:10px;color:var(--ink-mute);transform:translateY(-7px)}
+.back{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;color:var(--ink-soft);transition:color .2s}
+.back:hover{color:var(--ink)}
+.secure{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft)}
+.secure svg{width:14px;height:14px;color:var(--forest)}
+@media(max-width:640px){.secure{display:none}}
+
+main{padding:42px 0 80px}
+.page-head{margin-bottom:34px}
+.page-head .mono{display:block;margin-bottom:12px}
+.page-head h1{font-size:clamp(30px,4vw,42px)}
+
+.checkout-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:54px;align-items:start}
+@media(max-width:900px){.checkout-grid{grid-template-columns:1fr;gap:8px}}
+
+/* form */
+.form-sec{margin-bottom:38px}
+.form-sec .sec-t{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.form-sec .sec-t .step{width:24px;height:24px;border-radius:50%;background:var(--forest);color:#fff;font-family:'Spline Sans Mono',monospace;font-size:12px;display:grid;place-items:center;flex:none}
+.form-sec .sec-t h3{font-size:21px}
+.field{margin-bottom:15px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}
+label.lab{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:7px}
+label.lab .opt{font-weight:400;color:var(--ink-mute)}
+input.fc,select.fc{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:var(--r);padding:13px 14px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+input.fc:focus,select.fc:focus{outline:none;border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}
+input.fc::placeholder{color:#B7AD9D}
+.field.err input.fc,.field.err select.fc{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+.err-msg{display:none;font-size:12px;color:var(--red);margin-top:6px}
+.field.err .err-msg{display:block}
+
+.ship-opts{display:flex;flex-direction:column;gap:11px}
+.ship{display:flex;align-items:center;gap:14px;border:1px solid var(--line);background:var(--paper);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.ship.sel{border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}
+.ship .radio{width:18px;height:18px;border:1.5px solid var(--line);border-radius:50%;flex:none;display:grid;place-items:center}
+.ship.sel .radio{border-color:var(--forest)}
+.ship.sel .radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--forest)}
+.ship .s-main{flex:1}
+.ship .s-name{font-weight:600;font-size:14.5px}
+.ship .s-desc{font-size:12.5px;color:var(--ink-mute)}
+.ship .s-price{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--forest)}
+
+.pay-card{border:1px solid var(--line);border-radius:var(--r);background:var(--paper);padding:18px}
+.pay-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.pay-head .lock{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-mute)}
+.pay-head .lock svg{width:13px;height:13px;color:var(--forest)}
+.cards{display:flex;gap:5px}
+.cards .cc{width:30px;height:20px;border:1px solid var(--line-soft);border-radius:2px;background:var(--sand);font-family:'Spline Sans Mono',monospace;font-size:7px;display:grid;place-items:center;color:var(--ink-mute);letter-spacing:0}
+
+.btn-pay{width:100%;background:var(--forest);color:#fff;border:none;border-radius:var(--r);font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:16px;padding:17px;margin-top:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,transform .1s}
+.btn-pay:hover{background:var(--forest-deep)}
+.btn-pay:active{transform:translateY(1px)}
+.btn-pay svg{width:15px;height:15px}
+.pay-note{text-align:center;font-size:12px;color:var(--ink-mute);margin-top:14px}
+
+/* summary */
+.summary{position:sticky;top:90px;border:1px solid var(--line);background:var(--paper);border-radius:var(--r);overflow:hidden}
+.summary .s-h{padding:20px 22px;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between;align-items:baseline}
+.summary .s-h h3{font-size:18px}
+.summary .s-h .ct{font-size:12.5px;color:var(--ink-mute)}
+.lines{padding:8px 22px}
+.line{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line-soft)}
+.line:last-child{border-bottom:none}
+.line .li-img{width:62px;height:74px;border:1px solid var(--line-soft);border-radius:2px;overflow:hidden;flex:none;background:var(--sand-3)}
+.line .li-img img{width:100%;height:100%;object-fit:cover}
+.line .li-main{flex:1;min-width:0}
+.line .li-name{font-family:'Spectral',serif;font-size:15.5px;font-weight:500}
+.line .li-fin{font-size:12.5px;color:var(--ink-mute);margin:1px 0 9px}
+.li-qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:2px;background:var(--sand)}
+.li-qty button{width:26px;height:26px;border:none;background:none;cursor:pointer;font-size:15px;color:var(--ink-soft);font-family:'Spectral',serif}
+.li-qty button:hover{color:var(--ink)}
+.li-qty span{min-width:24px;text-align:center;font-family:'Spline Sans Mono',monospace;font-size:12px}
+.line .li-right{text-align:right;flex:none;display:flex;flex-direction:column;justify-content:space-between}
+.line .li-price{font-family:'Spectral',serif;font-weight:600;font-size:15.5px}
+.line .li-was{font-size:11.5px;color:var(--ink-mute);text-decoration:line-through}
+.line .li-rm{background:none;border:none;cursor:pointer;color:var(--ink-mute);font-size:11px;font-family:'Spline Sans Mono',monospace;letter-spacing:.06em;padding:0;margin-top:6px;transition:color .2s}
+.line .li-rm:hover{color:var(--red)}
+
+.promo{padding:16px 22px;border-top:1px solid var(--line-soft);display:flex;gap:9px}
+.promo input{flex:1;border:1px solid var(--line);background:var(--sand);border-radius:var(--r);padding:11px 13px;font-size:14px;font-family:'Hanken Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.promo input:focus{outline:none;border-color:var(--forest)}
+.promo button{border:1px solid var(--ink);background:transparent;border-radius:var(--r);padding:0 16px;font-weight:600;font-size:13px;cursor:pointer;color:var(--ink);transition:background .2s,color .2s}
+.promo button:hover{background:var(--ink);color:var(--sand)}
+.promo-msg{padding:0 22px 4px;font-size:12.5px;min-height:0}
+.promo-msg.ok{color:var(--forest)}
+.promo-msg.no{color:var(--red)}
+
+.totals{padding:18px 22px 22px;border-top:1px solid var(--line-soft);background:var(--sand-2)}
+.trow{display:flex;justify-content:space-between;font-size:14.5px;color:var(--ink-soft);margin-bottom:10px}
+.trow .free{color:var(--forest);font-weight:600}
+.trow.save{color:var(--forest)}
+.tgrand{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:16px;margin-top:6px}
+.tgrand .tg-l{font-family:'Spectral',serif;font-size:18px;font-weight:500}
+.tgrand .tg-v{font-family:'Spectral',serif;font-size:26px;font-weight:600}
+.tgrand .tg-v small{font-size:13px;color:var(--ink-mute);font-weight:400}
+.assurance{display:flex;flex-wrap:wrap;gap:8px 18px;padding:18px 22px;border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-soft)}
+.assurance span{display:flex;align-items:center;gap:7px}
+.assurance svg{width:13px;height:13px;color:var(--forest);flex:none}
+
+/* empty */
+.empty{text-align:center;padding:80px 20px;max-width:460px;margin:0 auto}
+.empty h2{font-size:30px;margin:18px 0 12px}
+.empty p{color:var(--ink-soft);margin-bottom:26px}
+.btn-shop{display:inline-flex;align-items:center;gap:9px;background:var(--forest);color:#fff;border-radius:var(--r);padding:15px 28px;font-weight:600;font-size:15px;transition:background .2s}
+.btn-shop:hover{background:var(--forest-deep)}
+
+/* success */
+.success{display:none;max-width:620px;margin:10px auto 0;text-align:center}
+.success.show{display:block;animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.success .tick{width:74px;height:74px;border-radius:50%;background:var(--forest);display:grid;place-items:center;margin:0 auto 26px}
+.success .tick svg{width:34px;height:34px;color:#fff}
+.success h2{font-size:clamp(30px,4vw,42px);margin-bottom:14px}
+.success .lead{color:var(--ink-soft);font-size:17px;max-width:46ch;margin:0 auto 30px}
+.order-box{border:1px solid var(--line);background:var(--paper);border-radius:var(--r);padding:26px;text-align:left;margin-bottom:28px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.order-box .ob{}
+.order-box .ob .k{font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px}
+.order-box .ob .v{font-size:15px;font-weight:600}
+.order-box .ob.full{grid-column:1 / -1;border-top:1px solid var(--line-soft);padding-top:18px}
+.next-steps{text-align:left;border:1px solid var(--line-soft);border-radius:var(--r);padding:6px 24px;background:var(--sand-2);margin-bottom:30px}
+.next-steps .ns{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line-soft);align-items:flex-start}
+.next-steps .ns:last-child{border-bottom:none}
+.next-steps .ns .n{font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--forest);padding-top:3px}
+.next-steps .ns h4{font-family:'Spectral',serif;font-size:16px;font-weight:500;margin-bottom:2px}
+.next-steps .ns p{font-size:13.5px;color:var(--ink-soft)}
+@media(max-width:560px){.order-box{grid-template-columns:1fr}.row3{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line-soft);background:var(--sand-2);padding:26px 0;font-size:12.5px;color:var(--ink-mute)}
+.foot-in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* mobile summary toggle */
+.msum{display:none}
+@media(max-width:900px){
+  .summary{position:static;margin-bottom:30px}
+  .checkout-grid{display:flex;flex-direction:column}
+  .order-col{order:-1}
+}
+</style>
+</head>
+<body>
+<div class="announce">Free UK delivery · Made to order · Ships within 3 days</div>
+<header>
+  <div class="wrap nav">
+    <a class="back" href="Index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      Continue shopping
+    </a>
+    <a class="brand" href="Index.html">RS&nbsp;Chimes<span class="tm">™</span></a>
+    <div class="secure">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      Secure checkout
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- EMPTY STATE -->
+    <div class="empty" id="emptyState" style="display:none">
+      <span class="mono">Your basket</span>
+      <h2>Nothing in the basket yet.</h2>
+      <p>Pick a hand-tuned bamboo chime and it'll appear here, ready to check out.</p>
+      <a class="btn-shop" href="Index.html">Browse the chimes
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <!-- CHECKOUT -->
+    <div id="checkoutState">
+      <div class="page-head">
+        <span class="mono">Secure checkout</span>
+        <h1>Almost there.</h1>
+      </div>
+      <div class="checkout-grid">
+        <!-- form -->
+        <form id="coForm" novalidate>
+          <div class="form-sec">
+            <div class="sec-t"><span class="step">1</span><h3>Contact</h3></div>
+            <div class="field">
+              <label class="lab" for="email">Email address</label>
+              <input class="fc" id="email" type="email" placeholder="you@example.co.uk" autocomplete="email">
+              <span class="err-msg">Please enter a valid email.</span>
+            </div>
+            <div class="field">
+              <label class="lab" for="phone">Phone <span class="opt">(for delivery updates)</span></label>
+              <input class="fc" id="phone" type="tel" placeholder="07700 900000" autocomplete="tel">
+              <span class="err-msg">Please enter a phone number.</span>
+            </div>
+          </div>
+
+          <div class="form-sec">
+            <div class="sec-t"><span class="step">2</span><h3>Delivery address</h3></div>
+            <div class="row2">
+              <div class="field">
+                <label class="lab" for="fname">First name</label>
+                <input class="fc" id="fname" type="text" autocomplete="given-name">
+                <span class="err-msg">Required.</span>
+              </div>
+              <div class="field">
+                <label class="lab" for="lname">Last name</label>
+                <input class="fc" id="lname" type="text" autocomplete="family-name">
+                <span class="err-msg">Required.</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="lab" for="addr1">Address</label>
+              <input class="fc" id="addr1" type="text" placeholder="House number and street" autocomplete="address-line1">
+              <span class="err-msg">Required.</span>
+            </div>
+            <div class="field">
+              <label class="lab" for="addr2">Address line 2 <span class="opt">(optional)</span></label>
+              <input class="fc" id="addr2" type="text" placeholder="Flat, unit, etc." autocomplete="address-line2">
+            </div>
+            <div class="row3">
+              <div class="field">
+                <label class="lab" for="city">Town / City</label>
+                <input class="fc" id="city" type="text" autocomplete="address-level2">
+                <span class="err-msg">Required.</span>
+              </div>
+              <div class="field">
+                <label class="lab" for="postcode">Postcode</label>
+                <input class="fc" id="postcode" type="text" placeholder="SW1A 1AA" autocomplete="postal-code">
+                <span class="err-msg">Required.</span>
+              </div>
+              <div class="field">
+                <label class="lab" for="country">Country</label>
+                <select class="fc" id="country" autocomplete="country-name">
+                  <option>United Kingdom</option>
+                  <option>Ireland</option>
+                  <option>Jersey</option>
+                  <option>Guernsey</option>
+                  <option>Isle of Man</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-sec">
+            <div class="sec-t"><span class="step">3</span><h3>Delivery method</h3></div>
+            <div class="ship-opts" id="shipOpts">
+              <div class="ship sel" data-ship="standard" data-cost="0">
+                <span class="radio"></span>
+                <span class="s-main"><span class="s-name">Standard delivery</span><span class="s-desc">Made to order · ships in 3 working days</span></span>
+                <span class="s-price">FREE</span>
+              </div>
+              <div class="ship" data-ship="express" data-cost="6">
+                <span class="radio"></span>
+                <span class="s-main"><span class="s-name">Priority dispatch</span><span class="s-desc">Jumps the queue · ships next working day</span></span>
+                <span class="s-price">£6.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-sec">
+            <div class="sec-t"><span class="step">4</span><h3>Payment</h3></div>
+            <div class="pay-card">
+              <div class="pay-head">
+                <span class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Encrypted &amp; secure</span>
+                <span class="cards"><span class="cc">VISA</span><span class="cc">MC</span><span class="cc">AMEX</span></span>
+              </div>
+              <div class="field">
+                <label class="lab" for="card">Card number</label>
+                <input class="fc" id="card" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="cc-number" maxlength="19">
+                <span class="err-msg">Enter a valid card number.</span>
+              </div>
+              <div class="row2">
+                <div class="field">
+                  <label class="lab" for="exp">Expiry</label>
+                  <input class="fc" id="exp" type="text" placeholder="MM / YY" autocomplete="cc-exp" maxlength="7">
+                  <span class="err-msg">MM / YY</span>
+                </div>
+                <div class="field">
+                  <label class="lab" for="cvc">CVC</label>
+                  <input class="fc" id="cvc" type="text" inputmode="numeric" placeholder="123" autocomplete="cc-csc" maxlength="4">
+                  <span class="err-msg">3–4 digits.</span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="lab" for="cardname">Name on card</label>
+                <input class="fc" id="cardname" type="text" autocomplete="cc-name">
+                <span class="err-msg">Required.</span>
+              </div>
+            </div>
+            <button class="btn-pay" type="submit" id="payBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <span id="payLabel">Pay £0.00</span>
+            </button>
+            <p class="pay-note">This is a demo store — no real payment is taken.</p>
+          </div>
+        </form>
+
+        <!-- summary -->
+        <div class="order-col">
+          <div class="summary">
+            <div class="s-h"><h3>Order summary</h3><span class="ct" id="sumCount">0 items</span></div>
+            <div class="lines" id="lines"></div>
+            <div class="promo">
+              <input id="promoInput" type="text" placeholder="Discount code">
+              <button type="button" id="promoBtn">Apply</button>
+            </div>
+            <div class="promo-msg" id="promoMsg"></div>
+            <div class="totals">
+              <div class="trow"><span>Subtotal</span><span id="tSub">£0.00</span></div>
+              <div class="trow save" id="tSaveRow" style="display:none"><span>Bundle saving</span><span id="tSave">−£0.00</span></div>
+              <div class="trow" id="tPromoRow" style="display:none"><span>Discount <span id="tPromoCode" style="color:var(--ink-mute)"></span></span><span id="tPromo">−£0.00</span></div>
+              <div class="trow"><span>Delivery</span><span class="free" id="tShip">FREE</span></div>
+              <div class="tgrand"><span class="tg-l">Total</span><span class="tg-v" id="tGrand">£0.00 <small>GBP</small></span></div>
+            </div>
+            <div class="assurance">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Free UK delivery</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> 30-day returns</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Hand-tuned, made to order</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success" id="successState">
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg></div>
+      <span class="mono">Order confirmed</span>
+      <h2>Thank you — your chime is on its way to the bench.</h2>
+      <p class="lead">A maker has been notified and will begin hand-building your order. We've emailed your confirmation and receipt.</p>
+      <div class="order-box">
+        <div class="ob"><div class="k">Order number</div><div class="v" id="okNum">RS-000000</div></div>
+        <div class="ob"><div class="k">Confirmation sent to</div><div class="v" id="okEmail">—</div></div>
+        <div class="ob"><div class="k">Estimated dispatch</div><div class="v" id="okDispatch">Within 3 working days</div></div>
+        <div class="ob"><div class="k">Total paid</div><div class="v" id="okTotal">£0.00</div></div>
+        <div class="ob full"><div class="k">Delivering to</div><div class="v" id="okAddr">—</div></div>
+      </div>
+      <div class="next-steps">
+        <div class="ns"><span class="n">01</span><div><h4>We build it by hand</h4><p>Your bamboo is cut, tuned by ear and sealed — start to finish by one maker.</p></div></div>
+        <div class="ns"><span class="n">02</span><div><h4>Boxed &amp; dispatched</h4><p>Nested into a kraft gift box with a care card, then sent with tracking.</p></div></div>
+        <div class="ns"><span class="n">03</span><div><h4>Hang &amp; enjoy</h4><p>One loop over a hook and you're done. We'll email you when it ships.</p></div></div>
+      </div>
+      <a class="btn-shop" href="Index.html">Back to the shop
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© 2026 RS Chimes™ · Handmade · Free UK delivery</span>
+    <span>Secure checkout · This is a demo store</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var cart = [];
+  try{ cart = JSON.parse(localStorage.getItem('rs_cart')||'[]'); }catch(e){ cart = []; }
+  var thumb = null;
+  try{ thumb = localStorage.getItem('rs_thumb'); }catch(e){}
+
+  var promo = { code:null, rate:0 };
+  var ship = { type:'standard', cost:0 };
+
+  var emptyState = document.getElementById('emptyState');
+  var checkoutState = document.getElementById('checkoutState');
+  var successState = document.getElementById('successState');
+
+  function money(n){ return '£' + n.toFixed(2); }
+
+  function render(){
+    if(!cart.length){
+      emptyState.style.display = 'block';
+      checkoutState.style.display = 'none';
+      return;
+    }
+    emptyState.style.display = 'none';
+    checkoutState.style.display = 'block';
+
+    var lines = document.getElementById('lines');
+    lines.innerHTML = '';
+    cart.forEach(function(it, idx){
+      var line = document.createElement('div');
+      line.className = 'line';
+      var imgHtml = thumb ? '<img src="'+thumb+'" alt="">' : '';
+      var wasHtml = it.was > it.now ? '<span class="li-was">'+money(it.was*it.qty)+'</span>' : '';
+      line.innerHTML =
+        '<div class="li-img">'+imgHtml+'</div>'+
+        '<div class="li-main">'+
+          '<div class="li-name">'+it.bundle+'</div>'+
+          '<div class="li-fin">Finish · '+it.finish+'</div>'+
+          '<span class="li-qty"><button data-act="dec" data-i="'+idx+'" aria-label="Decrease">−</button><span>'+it.qty+'</span><button data-act="inc" data-i="'+idx+'" aria-label="Increase">+</button></span>'+
+        '</div>'+
+        '<div class="li-right"><div><div class="li-price">'+money(it.now*it.qty)+'</div>'+wasHtml+'</div>'+
+          '<button class="li-rm" data-act="rm" data-i="'+idx+'">Remove</button></div>';
+      lines.appendChild(line);
+    });
+
+    lines.querySelectorAll('button[data-act]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var i = parseInt(b.getAttribute('data-i'),10);
+        var act = b.getAttribute('data-act');
+        if(act==='inc') cart[i].qty++;
+        else if(act==='dec') cart[i].qty = Math.max(1, cart[i].qty-1);
+        else if(act==='rm') cart.splice(i,1);
+        persist();
+        render();
+      });
+    });
+
+    computeTotals();
+  }
+
+  function persist(){ try{ localStorage.setItem('rs_cart', JSON.stringify(cart)); }catch(e){} }
+
+  function computeTotals(){
+    var sub = 0, wasSub = 0, count = 0;
+    cart.forEach(function(it){ sub += it.now*it.qty; wasSub += it.was*it.qty; count += it.qty; });
+    var bundleSave = wasSub - sub;
+    var promoAmt = promo.rate ? sub * promo.rate : 0;
+    var grand = sub - promoAmt + ship.cost;
+
+    document.getElementById('sumCount').textContent = count + (count===1?' item':' items');
+    document.getElementById('tSub').textContent = money(sub);
+    var saveRow = document.getElementById('tSaveRow');
+    if(bundleSave > 0){ saveRow.style.display='flex'; document.getElementById('tSave').textContent = '−'+money(bundleSave); }
+    else saveRow.style.display='none';
+    var promoRow = document.getElementById('tPromoRow');
+    if(promoAmt > 0){ promoRow.style.display='flex'; document.getElementById('tPromo').textContent = '−'+money(promoAmt); document.getElementById('tPromoCode').textContent = '('+promo.code+')'; }
+    else promoRow.style.display='none';
+    document.getElementById('tShip').textContent = ship.cost===0 ? 'FREE' : money(ship.cost);
+    document.getElementById('tShip').className = ship.cost===0 ? 'free' : '';
+    document.getElementById('tGrand').innerHTML = money(grand) + ' <small>GBP</small>';
+    document.getElementById('payLabel').textContent = 'Pay ' + money(grand);
+    return grand;
+  }
+
+  // delivery method
+  document.querySelectorAll('#shipOpts .ship').forEach(function(s){
+    s.addEventListener('click', function(){
+      document.querySelectorAll('#shipOpts .ship').forEach(function(x){x.classList.remove('sel')});
+      s.classList.add('sel');
+      ship.type = s.getAttribute('data-ship');
+      ship.cost = parseFloat(s.getAttribute('data-cost'));
+      computeTotals();
+    });
+  });
+
+  // promo
+  var PROMOS = { 'RS10':0.10, 'WELCOME10':0.10, 'CHIME15':0.15 };
+  document.getElementById('promoBtn').addEventListener('click', function(){
+    var v = (document.getElementById('promoInput').value||'').trim().toUpperCase();
+    var msg = document.getElementById('promoMsg');
+    if(!v){ msg.textContent=''; msg.className='promo-msg'; return; }
+    if(PROMOS[v]){
+      promo.code = v; promo.rate = PROMOS[v];
+      msg.textContent = 'Code applied — ' + Math.round(promo.rate*100) + '% off.';
+      msg.className = 'promo-msg ok';
+    } else {
+      promo.code=null; promo.rate=0;
+      msg.textContent = 'That code isn\u2019t valid. Try RS10.';
+      msg.className = 'promo-msg no';
+    }
+    computeTotals();
+  });
+
+  // ---- validation ----
+  function setErr(id, on){ document.getElementById(id).closest('.field').classList[on?'add':'remove']('err'); }
+  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function digits(v){ return (v||'').replace(/\D/g,''); }
+
+  // input niceties
+  var cardEl = document.getElementById('card');
+  cardEl.addEventListener('input', function(){
+    var d = digits(cardEl.value).slice(0,16);
+    cardEl.value = d.replace(/(.{4})/g,'$1 ').trim();
+  });
+  var expEl = document.getElementById('exp');
+  expEl.addEventListener('input', function(){
+    var d = digits(expEl.value).slice(0,4);
+    if(d.length>=3) expEl.value = d.slice(0,2)+' / '+d.slice(2);
+    else expEl.value = d;
+  });
+  document.getElementById('cvc').addEventListener('input', function(){ this.value = digits(this.value).slice(0,4); });
+
+  function validate(){
+    var ok = true;
+    var checks = [
+      ['email', function(v){ return validEmail(v); }],
+      ['phone', function(v){ return digits(v).length >= 7; }],
+      ['fname', function(v){ return v.trim().length>0; }],
+      ['lname', function(v){ return v.trim().length>0; }],
+      ['addr1', function(v){ return v.trim().length>0; }],
+      ['city',  function(v){ return v.trim().length>0; }],
+      ['postcode', function(v){ return v.trim().length>=4; }],
+      ['card', function(v){ return digits(v).length>=15; }],
+      ['exp', function(v){ return digits(v).length===4; }],
+      ['cvc', function(v){ return digits(v).length>=3; }],
+      ['cardname', function(v){ return v.trim().length>0; }]
+    ];
+    var firstErr = null;
+    checks.forEach(function(c){
+      var el = document.getElementById(c[0]);
+      var good = c[1](el.value);
+      setErr(c[0], !good);
+      if(!good){ ok=false; if(!firstErr) firstErr = el; }
+    });
+    if(firstErr){ firstErr.focus(); firstErr.scrollIntoView({behavior:'smooth', block:'center'}); }
+    return ok;
+  }
+  // clear error on input
+  document.querySelectorAll('#coForm .fc').forEach(function(el){
+    el.addEventListener('input', function(){ var f = el.closest('.field'); if(f) f.classList.remove('err'); });
+  });
+
+  // ---- submit ----
+  document.getElementById('coForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!validate()) return;
+    var grand = computeTotals();
+
+    var num = 'RS-' + Math.floor(100000 + Math.random()*900000);
+    var d = new Date(); d.setDate(d.getDate() + (ship.type==='express'?1:3));
+    var dispatch = d.toLocaleDateString('en-GB',{weekday:'long', day:'numeric', month:'long'});
+    var fn = document.getElementById('fname').value.trim();
+    var ln = document.getElementById('lname').value.trim();
+    var a1 = document.getElementById('addr1').value.trim();
+    var city = document.getElementById('city').value.trim();
+    var pc = document.getElementById('postcode').value.trim().toUpperCase();
+
+    document.getElementById('okNum').textContent = num;
+    document.getElementById('okEmail').textContent = document.getElementById('email').value.trim();
+    document.getElementById('okDispatch').textContent = 'By ' + dispatch;
+    document.getElementById('okTotal').textContent = money(grand);
+    document.getElementById('okAddr').textContent = fn+' '+ln+', '+a1+', '+city+', '+pc;
+
+    // clear cart
+    try{ localStorage.removeItem('rs_cart'); }catch(e){}
+
+    checkoutState.style.display = 'none';
+    emptyState.style.display = 'none';
+    successState.classList.add('show');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
