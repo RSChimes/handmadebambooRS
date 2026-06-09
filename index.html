@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RS Chimes™ — Handmade Bamboo Wind Chimes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sand-bg: oklch(0.966 0.008 78);
+    --sand-2:  oklch(0.945 0.011 78);
+    --sand-3:  oklch(0.915 0.013 78);
+    --paper:   oklch(0.988 0.006 86);
+    --ink:     oklch(0.265 0.012 62);
+    --ink-soft:oklch(0.46 0.012 62);
+    --ink-faint:oklch(0.62 0.01 62);
+    --line:    oklch(0.872 0.009 78);
+    --line-2:  oklch(0.82 0.011 78);
+    --accent:  oklch(0.52 0.068 142);
+    --accent-d:oklch(0.42 0.068 142);
+    --clay:    oklch(0.60 0.056 52);
+    --ink-dark:oklch(0.205 0.012 62);
+
+    --ff-serif: "Spectral", Georgia, serif;
+    --ff-sans:  "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+    --ff-mono:  "Spline Sans Mono", ui-monospace, monospace;
+
+    --maxw: 1280px;
+    --gut: clamp(18px, 5vw, 64px);
+    --radius: 4px;
+    --shadow-soft: 0 1px 2px oklch(0.4 0.02 62 / 0.04), 0 8px 30px oklch(0.4 0.02 62 / 0.06);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    font-family:var(--ff-sans);
+    background:var(--sand-bg);
+    color:var(--ink);
+    line-height:1.55;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  ::selection{ background:var(--accent); color:var(--paper); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding-inline:var(--gut); }
+  .eyebrow{
+    font-family:var(--ff-mono); font-size:11.5px; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--ink-faint); font-weight:500;
+  }
+  .serif{ font-family:var(--ff-serif); font-weight:300; line-height:1.06; letter-spacing:-0.01em; }
+  h2.serif{ font-size:clamp(30px, 4.6vw, 52px); }
+
+  /* Image fill utility */
+  .img-fill{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* Announcement bar */
+  .announce{
+    background:var(--ink-dark); color:oklch(0.92 0.01 78);
+    font-family:var(--ff-mono); font-size:11.5px; letter-spacing:0.12em;
+    text-transform:uppercase; text-align:center; padding:9px 16px;
+  }
+  .announce b{ color:var(--paper); font-weight:500; }
+
+  /* Header */
+  header.site{
+    position:sticky; top:0; z-index:60;
+    background:oklch(0.966 0.008 78 / 0.82); backdrop-filter:blur(14px) saturate(1.2);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand{ display:flex; align-items:baseline; gap:2px; font-family:var(--ff-serif); font-size:25px; letter-spacing:0.02em; }
+  .brand .tm{ font-family:var(--ff-sans); font-size:11px; transform:translateY(-9px); color:var(--ink-soft); }
+  .nav-links{ display:flex; gap:30px; font-size:14px; }
+  .nav-links a{ color:var(--ink-soft); transition:color .2s; }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-right{ display:flex; align-items:center; gap:18px; }
+  .icon-btn{ display:flex; align-items:center; gap:7px; font-size:13.5px; color:var(--ink-soft); }
+  .icon-btn svg{ width:19px; height:19px; }
+  .cart-count{
+    background:var(--ink); color:var(--paper); font-size:11px; font-weight:600;
+    min-width:18px; height:18px; border-radius:100px; display:inline-flex; align-items:center;
+    justify-content:center; padding:0 5px;
+  }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  /* Hero / PDP grid */
+  .pdp{ padding-top:clamp(20px,3vw,40px); padding-bottom:clamp(40px,6vw,72px); }
+  .pdp-grid{ display:grid; grid-template-columns: 1.12fr 0.88fr; gap:clamp(28px,4vw,64px); align-items:start; }
+  @media (max-width:920px){ .pdp-grid{ grid-template-columns:1fr; gap:28px; } }
+
+  /* Gallery */
+  .gallery{ position:sticky; top:84px; }
+  @media (max-width:920px){ .gallery{ position:static; } }
+  .gallery-main{ aspect-ratio:4/5; border-radius:var(--radius); overflow:hidden; background:var(--sand-2); }
+  .gallery-main img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-thumbs{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:10px; }
+  .thumb{ aspect-ratio:1; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); padding:0; position:relative; }
+  .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb::after{ content:""; position:absolute; inset:0; border:2px solid transparent; border-radius:var(--radius); transition:border-color .2s; }
+  .thumb.active::after{ border-color:var(--ink); }
+  .gallery-badge{
+    position:absolute; top:14px; left:14px; z-index:2;
+    font-family:var(--ff-mono); font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase;
+    background:var(--paper); color:var(--ink); padding:6px 11px; border-radius:100px;
+    box-shadow:var(--shadow-soft);
+  }
+  .gallery-main-wrap{ position:relative; }
+
+  /* Buy box */
+  .buybox{ display:flex; flex-direction:column; gap:18px; }
+  .stars{ display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--ink-soft); }
+  .stars .s{ display:inline-flex; gap:2px; color:var(--clay); }
+  .stars .s svg{ width:15px; height:15px; }
+  .stars u{ text-decoration:underline; text-underline-offset:2px; cursor:pointer; }
+  .p-title{ font-family:var(--ff-serif); font-weight:300; font-size:clamp(31px,4.4vw,46px); line-height:1.02; letter-spacing:-0.015em; }
+  .p-sub{ font-size:15.5px; color:var(--ink-soft); max-width:46ch; }
+  .price-row{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .price-now{ font-size:27px; font-weight:600; }
+  .price-was{ font-size:17px; color:var(--ink-faint); text-decoration:line-through; }
+  .price-save{
+    font-family:var(--ff-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--accent-d); background:oklch(0.52 0.068 142 / 0.12); padding:4px 9px; border-radius:100px; font-weight:500;
+  }
+  .pay-note{ font-size:12.5px; color:var(--ink-faint); }
+
+  .opt-label{ font-family:var(--ff-mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:9px; display:flex; justify-content:space-between; }
+  .opt-label span{ color:var(--ink); text-transform:none; font-family:var(--ff-sans); font-size:13px; letter-spacing:0; }
+
+  /* Bundle selector */
+  .bundles{ display:flex; flex-direction:column; gap:10px; }
+  .bundle{
+    display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px;
+    border:1.5px solid var(--line-2); border-radius:var(--radius); padding:15px 17px;
+    background:var(--paper); cursor:pointer; transition:border-color .18s, background .18s; position:relative;
+  }
+  .bundle:hover{ border-color:var(--ink-faint); }
+  .bundle.active{ border-color:var(--ink); background:var(--sand-bg); }
+  .bundle .radio{ width:18px; height:18px; border-radius:100px; border:1.5px solid var(--line-2); position:relative; flex-shrink:0; }
+  .bundle.active .radio{ border-color:var(--ink); }
+  .bundle.active .radio::after{ content:""; position:absolute; inset:3px; border-radius:100px; background:var(--ink); }
+  .bundle .b-name{ font-weight:600; font-size:15px; }
+  .bundle .b-desc{ font-size:12.5px; color:var(--ink-soft); }
+  .bundle .b-price{ text-align:right; }
+  .bundle .b-price .bn{ font-weight:600; font-size:15px; }
+  .bundle .b-price .bw{ font-size:12px; color:var(--ink-faint); text-decoration:line-through; }
+  .b-flag{
+    position:absolute; top:-9px; right:14px; font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.12em;
+    text-transform:uppercase; background:var(--clay); color:var(--paper); padding:3px 9px; border-radius:100px;
+  }
+
+  /* Swatches */
+  .swatches{ display:flex; gap:10px; }
+  .swatch{ width:34px; height:34px; border-radius:100px; border:1.5px solid var(--line-2); position:relative; padding:0; }
+  .swatch span{ position:absolute; inset:3px; border-radius:100px; }
+  .swatch.active{ border-color:var(--ink); }
+  .sw-natural span{ background:oklch(0.82 0.04 78); }
+  .sw-weathered span{ background:oklch(0.58 0.03 62); }
+  .sw-dark span{ background:oklch(0.38 0.02 62); }
+
+  /* Qty */
+  .qty{ display:inline-flex; align-items:center; border:1.5px solid var(--line-2); border-radius:var(--radius); background:var(--paper); }
+  .qty button{ width:42px; height:46px; font-size:18px; color:var(--ink-soft); }
+  .qty input{ width:44px; height:46px; text-align:center; border:none; background:none; font-family:var(--ff-sans); font-size:15px; font-weight:600; color:var(--ink); -moz-appearance:textfield; }
+  .qty input::-webkit-outer-spin-button,.qty input::-webkit-inner-spin-button{ -webkit-appearance:none; }
+
+  /* ATC button */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:var(--ff-sans); font-weight:600; font-size:15px; letter-spacing:0.01em;
+    border-radius:var(--radius); padding:17px 26px; transition:transform .12s, background .2s, box-shadow .2s;
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn-primary{ background:var(--ink); color:var(--paper); width:100%; }
+  .btn-primary:hover{ background:var(--ink-dark); }
+  .btn-primary .price-inline{ opacity:.7; font-weight:500; }
+  .btn-ghost{ background:var(--paper); color:var(--ink); border:1.5px solid var(--line-2); width:100%; }
+  .btn-ghost:hover{ border-color:var(--ink-faint); }
+
+  .pay-icons{ display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; }
+  .pay-icons .pi{ height:22px; border:1px solid var(--line); border-radius:3px; background:var(--paper); padding:0 8px; display:flex; align-items:center; font-family:var(--ff-mono); font-size:9px; letter-spacing:0.06em; color:var(--ink-faint); text-transform:uppercase; }
+
+  .trust-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:18px 0; }
+  .trust-row .t{ display:flex; flex-direction:column; gap:4px; align-items:flex-start; }
+  .trust-row .t svg{ width:21px; height:21px; color:var(--accent-d); }
+  .trust-row .t b{ font-size:13px; font-weight:600; }
+  .trust-row .t span{ font-size:11.5px; color:var(--ink-soft); line-height:1.35; }
+
+  .quick-benefits{ display:flex; flex-direction:column; gap:11px; }
+  .quick-benefits li{ display:flex; gap:11px; align-items:flex-start; font-size:14.5px; list-style:none; }
+  .quick-benefits svg{ width:18px; height:18px; color:var(--accent-d); flex-shrink:0; margin-top:2px; }
+
+  /* Marquee */
+  .strip{ background:var(--ink-dark); color:oklch(0.9 0.01 78); overflow:hidden; }
+  .marquee{ display:flex; gap:0; white-space:nowrap; animation:scroll 36s linear infinite; }
+  .marquee span{ display:inline-flex; align-items:center; font-family:var(--ff-mono); font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; padding:16px 0; }
+  .marquee span::after{ content:"✦"; color:var(--accent); margin:0 34px; font-size:9px; }
+  @keyframes scroll{ to{ transform:translateX(-50%); } }
+
+  /* Section scaffold */
+  section{ padding-block:clamp(56px,8vw,108px); }
+  .sec-head{ max-width:680px; }
+  .sec-head .eyebrow{ display:block; margin-bottom:18px; }
+  .sec-head p{ color:var(--ink-soft); font-size:16.5px; margin-top:18px; max-width:52ch; }
+
+  /* Benefits grid */
+  .bg-sand{ background:var(--sand-2); }
+  .benefits{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:48px; }
+  @media (max-width:900px){ .benefits{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:520px){ .benefits{ grid-template-columns:1fr; } }
+  .benefit{ background:var(--sand-bg); padding:30px 26px; display:flex; flex-direction:column; gap:13px; min-height:200px; }
+  .benefit .num{ font-family:var(--ff-mono); font-size:11px; color:var(--ink-faint); letter-spacing:0.1em; }
+  .benefit svg{ width:26px; height:26px; color:var(--accent-d); }
+  .benefit h3{ font-size:18px; font-weight:600; letter-spacing:-0.01em; }
+  .benefit p{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+
+  /* How it works */
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px); margin-top:54px; }
+  @media (max-width:820px){ .steps{ grid-template-columns:1fr; gap:36px; } }
+  .step{ display:flex; flex-direction:column; gap:18px; }
+  .step-img{ aspect-ratio:4/3; border-radius:var(--radius); overflow:hidden; }
+  .step-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .step-n{ font-family:var(--ff-serif); font-size:40px; font-weight:300; color:var(--accent-d); line-height:1; }
+  .step h3{ font-size:19px; font-weight:600; margin-top:-6px; }
+  .step p{ font-size:14px; color:var(--ink-soft); }
+  .step-time{ font-family:var(--ff-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); }
+
+  /* Lifestyle full-bleed */
+  .lifestyle{ position:relative; min-height:min(86vh,720px); display:flex; align-items:flex-end; padding:0; overflow:hidden; }
+  .lifestyle-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .lifestyle .ls-inner{ position:relative; z-index:2; padding:clamp(34px,6vw,80px); color:var(--paper); max-width:680px; }
+  .lifestyle::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 30%, oklch(0.18 0.01 62 / 0.62)); z-index:1; }
+  .lifestyle .eyebrow{ color:oklch(0.78 0.05 142); }
+  .lifestyle h2{ color:var(--paper); font-size:clamp(34px,5.5vw,68px); margin:16px 0 14px; }
+  .lifestyle p{ color:oklch(0.92 0.01 78); font-size:17px; max-width:46ch; }
+
+  /* The Craft stats */
+  .craft-wrap{ display:grid; grid-template-columns:1fr 0.82fr; gap:clamp(28px,4vw,60px); align-items:center; margin-top:50px; }
+  @media (max-width:880px){ .craft-wrap{ grid-template-columns:1fr; } }
+  .craft-img{ aspect-ratio:4/5; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-soft); }
+  .craft-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .craft-stats{ display:flex; gap:0; margin-top:36px; flex-direction:column; border-top:1px solid var(--line); }
+  .craft-stat{ display:flex; align-items:center; gap:20px; padding:20px 0; border-bottom:1px solid var(--line); }
+  .craft-stat .cs-num{ font-family:var(--ff-serif); font-weight:300; font-size:44px; line-height:1; color:var(--accent-d); min-width:80px; }
+  .craft-stat .cs-text b{ font-size:15px; font-weight:600; display:block; }
+  .craft-stat .cs-text span{ font-size:13px; color:var(--ink-soft); }
+
+  /* For every space */
+  .dual{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:48px; }
+  @media (max-width:760px){ .dual{ grid-template-columns:1fr; } }
+  .dual-cell{ background:var(--sand-bg); padding:0; }
+  .dual-cell img{ aspect-ratio:5/4; width:100%; object-fit:cover; display:block; }
+  .dual-cell .dc-body{ padding:30px 30px 36px; }
+  .dual-cell h3{ font-family:var(--ff-serif); font-weight:300; font-size:27px; letter-spacing:-0.01em; }
+  .dual-cell p{ font-size:14.5px; color:var(--ink-soft); margin-top:10px; }
+  .dual-cell ul{ margin-top:18px; display:flex; flex-direction:column; gap:8px; }
+  .dual-cell li{ list-style:none; font-size:14px; display:flex; gap:9px; }
+  .dual-cell li svg{ width:16px; height:16px; color:var(--accent-d); flex-shrink:0; margin-top:3px; }
+
+  /* What's included */
+  .incl-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,56px); align-items:center; margin-top:46px; }
+  @media (max-width:820px){ .incl-grid{ grid-template-columns:1fr; } }
+  .incl-img{ aspect-ratio:1; border-radius:var(--radius); overflow:hidden; }
+  .incl-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .incl-list{ display:flex; flex-direction:column; }
+  .incl-item{ display:grid; grid-template-columns:auto 1fr; gap:16px; padding:18px 0; border-bottom:1px solid var(--line); }
+  .incl-item:first-child{ padding-top:0; }
+  .incl-item .ic{ width:46px; height:46px; border-radius:100px; background:var(--sand-3); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .incl-item .ic svg{ width:22px; height:22px; color:var(--ink); }
+  .incl-item h4{ font-size:16px; font-weight:600; }
+  .incl-item p{ font-size:13.5px; color:var(--ink-soft); }
+
+  /* Reviews */
+  .rev-summary{ display:grid; grid-template-columns:auto 1fr; gap:clamp(30px,5vw,72px); align-items:center; margin-top:44px; padding-bottom:44px; border-bottom:1px solid var(--line); }
+  @media (max-width:720px){ .rev-summary{ grid-template-columns:1fr; gap:28px; } }
+  .rev-score{ text-align:center; }
+  .rev-score .big{ font-family:var(--ff-serif); font-weight:300; font-size:74px; line-height:0.9; }
+  .rev-score .s svg{ width:18px; height:18px; color:var(--clay); }
+  .rev-score .s{ display:inline-flex; gap:3px; margin:10px 0 6px; }
+  .rev-score small{ font-size:12.5px; color:var(--ink-soft); }
+  .rev-bars{ display:flex; flex-direction:column; gap:9px; }
+  .rev-bar{ display:grid; grid-template-columns:54px 1fr 40px; gap:12px; align-items:center; font-size:12.5px; color:var(--ink-soft); }
+  .rev-bar .track{ height:7px; background:var(--sand-3); border-radius:100px; overflow:hidden; }
+  .rev-bar .fill{ height:100%; background:var(--clay); border-radius:100px; }
+  .rev-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:40px; }
+  @media (max-width:880px){ .rev-cards{ grid-template-columns:1fr; } }
+  .rev-card{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:26px; display:flex; flex-direction:column; gap:13px; }
+  .rev-card .s{ display:inline-flex; gap:2px; color:var(--clay); } .rev-card .s svg{ width:14px; height:14px; }
+  .rev-card .q{ font-family:var(--ff-serif); font-weight:300; font-size:18.5px; line-height:1.4; letter-spacing:-0.01em; }
+  .rev-card .who{ display:flex; align-items:center; gap:11px; margin-top:auto; }
+  .rev-card .av{ width:36px; height:36px; border-radius:100px; background:var(--sand-3); display:flex; align-items:center; justify-content:center; font-family:var(--ff-mono); font-size:12px; color:var(--ink-soft); flex-shrink:0; }
+  .rev-card .who b{ font-size:13.5px; font-weight:600; display:block; }
+  .rev-card .who span{ font-size:11.5px; color:var(--ink-faint); }
+  .verified{ font-family:var(--ff-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent-d); display:flex; align-items:center; gap:5px; }
+  .verified svg{ width:12px; height:12px; }
+
+  /* Comparison */
+  .compare{ margin-top:46px; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--paper); }
+  .compare table{ width:100%; border-collapse:collapse; }
+  .compare th, .compare td{ padding:16px 18px; text-align:left; font-size:14px; border-bottom:1px solid var(--line); }
+  .compare thead th{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:500; }
+  .compare thead th.us{ color:var(--ink); }
+  .compare td.feat{ color:var(--ink-soft); }
+  .compare .col-us{ background:var(--sand-bg); }
+  .compare thead th.us{ background:var(--ink); color:var(--paper); }
+  .compare tbody tr:last-child td{ border-bottom:none; }
+  .compare .yes{ color:var(--accent-d); } .compare .no{ color:var(--ink-faint); }
+  .compare svg{ width:18px; height:18px; }
+  @media (max-width:620px){ .compare th, .compare td{ padding:13px 12px; font-size:12.5px; } }
+
+  /* FAQ */
+  .faq{ max-width:820px; margin:44px auto 0; }
+  .faq-item{ border-bottom:1px solid var(--line); }
+  .faq-q{ width:100%; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0; text-align:left; font-size:17px; font-weight:500; }
+  .faq-q .pm{ width:22px; height:22px; flex-shrink:0; position:relative; }
+  .faq-q .pm::before,.faq-q .pm::after{ content:""; position:absolute; background:var(--ink); border-radius:2px; top:50%; left:50%; transition:transform .25s; }
+  .faq-q .pm::before{ width:14px; height:1.5px; transform:translate(-50%,-50%); }
+  .faq-q .pm::after{ width:1.5px; height:14px; transform:translate(-50%,-50%); }
+  .faq-item.open .pm::after{ transform:translate(-50%,-50%) scaleY(0); }
+  .faq-a{ overflow:hidden; max-height:0; transition:max-height .3s ease; }
+  .faq-a p{ padding-bottom:24px; color:var(--ink-soft); font-size:15px; max-width:64ch; }
+
+  /* Photo gallery */
+  .photo-gallery{ margin-top:52px; }
+  .pg-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:0;
+  }
+  @media (max-width:760px){ .pg-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:480px){ .pg-grid{ grid-template-columns:1fr; } }
+  .pg-item{
+    overflow:hidden; border-radius:var(--radius);
+    background:var(--sand-2);
+    cursor:pointer;
+    transition:opacity .2s;
+  }
+  .pg-item:hover{ opacity:0.92; }
+  .pg-item img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+  .pg-item.tall img{ aspect-ratio:3/4; }
+
+  /* Final CTA */
+  .final{ background:var(--ink-dark); color:oklch(0.94 0.01 78); text-align:center; }
+  .final h2{ color:var(--paper); font-family:var(--ff-serif); font-weight:300; font-size:clamp(34px,5.5vw,64px); line-height:1.02; letter-spacing:-0.015em; }
+  .final .eyebrow{ color:oklch(0.72 0.06 142); }
+  .final p{ color:oklch(0.82 0.01 78); font-size:17px; max-width:48ch; margin:18px auto 0; }
+  .final .offer{ display:inline-flex; align-items:center; gap:14px; margin:30px auto 26px; font-family:var(--ff-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; border:1px solid oklch(0.5 0.01 78); border-radius:100px; padding:11px 20px; }
+  .final .offer b{ color:var(--paper); }
+  .final .btn-primary{ background:var(--paper); color:var(--ink); width:auto; padding:18px 44px; }
+  .final .btn-primary:hover{ background:oklch(0.92 0.01 78); }
+  .final .countdown{ font-family:var(--ff-mono); color:oklch(0.72 0.08 142); font-weight:500; }
+  .final small{ display:block; margin-top:18px; font-size:12px; color:oklch(0.7 0.01 78); }
+
+  /* Footer */
+  footer.site{ background:var(--sand-2); border-top:1px solid var(--line); padding-block:56px 30px; }
+  .foot-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:32px; }
+  @media (max-width:760px){ .foot-grid{ grid-template-columns:1fr 1fr; gap:30px; } }
+  .foot-brand .brand{ font-size:30px; }
+  .foot-brand p{ font-size:13.5px; color:var(--ink-soft); margin-top:14px; max-width:34ch; }
+  .foot-col h5{ font-family:var(--ff-mono); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:16px; }
+  .foot-col a{ display:block; font-size:13.5px; color:var(--ink-soft); padding:5px 0; transition:color .2s; }
+  .foot-col a:hover{ color:var(--ink); }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-top:48px; padding-top:24px; border-top:1px solid var(--line); font-size:12px; color:var(--ink-faint); }
+
+  /* Sticky ATC */
+  .sticky-atc{
+    position:fixed; left:0; right:0; bottom:0; z-index:70;
+    background:oklch(0.988 0.006 86 / 0.92); backdrop-filter:blur(14px) saturate(1.2);
+    border-top:1px solid var(--line); box-shadow:0 -6px 24px oklch(0.4 0.02 62 / 0.07);
+    transform:translateY(110%); transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .sticky-atc.show{ transform:translateY(0); }
+  .sticky-inner{ max-width:var(--maxw); margin:0 auto; padding:12px var(--gut); display:flex; align-items:center; gap:18px; }
+  .sticky-prod{ display:flex; align-items:center; gap:13px; flex:1; min-width:0; }
+  .sticky-prod .sp-img{ width:48px; height:48px; border-radius:4px; overflow:hidden; flex-shrink:0; }
+  .sticky-prod .sp-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .sticky-prod .sp-meta{ min-width:0; }
+  .sticky-prod b{ font-size:14px; font-weight:600; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .sticky-prod .sp-price{ font-size:13px; color:var(--ink-soft); }
+  .sticky-prod .sp-price s{ color:var(--ink-faint); margin-left:6px; }
+  .sticky-atc .btn-primary{ width:auto; padding:14px 34px; white-space:nowrap; }
+  @media (max-width:620px){
+    .sticky-prod .sp-img{ display:none; }
+    .sticky-prod b{ font-size:13px; }
+    .sticky-atc .btn-primary{ padding:14px 22px; flex-shrink:0; }
+  }
+
+  /* Toast */
+  .toast{
+    position:fixed; top:78px; right:var(--gut); z-index:90; width:min(340px, calc(100vw - 36px));
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-soft);
+    padding:16px; display:flex; gap:13px; align-items:flex-start;
+    transform:translateX(calc(100% + 40px)); transition:transform .4s cubic-bezier(.4,0,.2,1);
+  }
+  .toast.show{ transform:translateX(0); }
+  .toast .tk{ width:30px; height:30px; border-radius:100px; background:oklch(0.52 0.068 142 / 0.16); color:var(--accent-d); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .toast .tk svg{ width:17px; height:17px; }
+  .toast b{ font-size:14px; }
+  .toast p{ font-size:12.5px; color:var(--ink-soft); margin-top:2px; }
+  .toast a{ font-size:12.5px; color:var(--accent-d); font-weight:600; text-decoration:underline; text-underline-offset:2px; margin-top:8px; display:inline-block; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } .marquee{ animation:none; } }
+</style>
+</head>
+<body>
+
+<div class="announce">Free UK delivery on all orders · <b>Handmade to order · Ships in 3 days</b> · Outdoor weather-sealed</div>
+
+<header class="site">
+  <div class="wrap nav">
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#craft">The craft</a>
+      <a href="#benefits">Why RS</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="brand" href="#top" aria-label="RS Chimes home">RS Chimes<span class="tm">™</span></a>
+    <div class="nav-right">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO / PDP -->
+  <section class="pdp wrap" style="padding-top:clamp(20px,3vw,40px);">
+    <div class="pdp-grid">
+
+      <div class="gallery">
+        <div class="gallery-main-wrap">
+          <span class="gallery-badge">Handmade · Weather-sealed</span>
+          <div class="gallery-main" id="galleryMain">
+            <img src="images/shot-01-hero.jpg" alt="RS Chimes bamboo wind chime hanging in golden hour garden">
+          </div>
+        </div>
+        <div class="gallery-thumbs" id="thumbs">
+          <button class="thumb active" data-src="images/shot-01-hero.jpg" data-label="Hero — full chime set hanging in golden hour garden">
+            <img src="images/shot-01-hero.jpg" alt="Garden">
+          </button>
+          <button class="thumb" data-src="images/shot-02-texture.jpg" data-label="Detail — bamboo tube texture and cord close-up">
+            <img src="images/shot-02-texture.jpg" alt="Texture">
+          </button>
+          <button class="thumb" data-src="images/shot-03-dusk.jpg" data-label="In situ — hanging from pergola at dusk">
+            <img src="images/shot-03-dusk.jpg" alt="At dusk">
+          </button>
+          <button class="thumb" data-src="images/shot-04-cap.jpg" data-label="Detail — coconut shell cap and cord knot macro">
+            <img src="images/shot-04-cap.jpg" alt="Detail">
+          </button>
+          <button class="thumb" data-src="images/shot-05-flatlay.jpg" data-label="Flat-lay — full set on natural linen">
+            <img src="images/shot-05-flatlay.jpg" alt="Flat-lay">
+          </button>
+        </div>
+      </div>
+
+      <div class="buybox">
+        <div class="stars">
+          <span class="s" aria-hidden="true"></span>
+          <span><b style="color:var(--ink);font-weight:600;">4.9</b> · <u>847 reviews</u></span>
+        </div>
+        <h1 class="p-title">RS Chimes™<br>Bamboo Wind Chime</h1>
+        <p class="p-sub">Hand-selected natural bamboo. Tuned by hand. Built to live outdoors, sound beautiful, and last for years — not a season.</p>
+
+        <div class="price-row">
+          <span class="price-now" id="priceNow">£54</span>
+          <span class="price-was">£72</span>
+          <span class="price-save">Save 25% · Launch offer</span>
+        </div>
+        <p class="pay-note">or 3 interest-free payments of £18. Pay later available at checkout.</p>
+
+        <div>
+          <div class="opt-label">Choose your set <span id="bundleNote">Most popular: The Garden Pair</span></div>
+          <div class="bundles" id="bundles">
+            <button class="bundle" data-price="34" data-each="34" data-name="The Single">
+              <span class="radio"></span>
+              <span><span class="b-name">The Single</span><br><span class="b-desc">One handmade chime — your first RS</span></span>
+              <span class="b-price"><span class="bn">£34</span><br><span class="bw">£46</span></span>
+            </button>
+            <button class="bundle active" data-price="54" data-each="27" data-name="The Garden Pair">
+              <span class="b-flag">Best value · Save £38</span>
+              <span class="radio"></span>
+              <span><span class="b-name">The Garden Pair — ×2</span><br><span class="b-desc">Two chimes · front &amp; back garden, or gift one</span></span>
+              <span class="b-price"><span class="bn">£54</span><br><span class="bw">£92</span></span>
+            </button>
+            <button class="bundle" data-price="75" data-each="25" data-name="The Full Set — ×3">
+              <span class="radio"></span>
+              <span><span class="b-name">The Full Set — ×3</span><br><span class="b-desc">Three chimes · fill the garden, gift two</span></span>
+              <span class="b-price"><span class="bn">£75</span><br><span class="bw">£138</span></span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="opt-label">Finish <span id="swatchNote">Natural</span></div>
+          <div class="swatches" id="swatches">
+            <button class="swatch sw-natural active" data-name="Natural" aria-label="Natural"><span></span></button>
+            <button class="swatch sw-weathered" data-name="Weathered" aria-label="Weathered"><span></span></button>
+            <button class="swatch sw-dark" data-name="Dark" aria-label="Dark"><span></span></button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; align-items:stretch;">
+          <div class="qty">
+            <button id="qMinus" aria-label="Decrease quantity">−</button>
+            <input id="qVal" type="number" value="1" min="1" max="9" inputmode="numeric" />
+            <button id="qPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn btn-primary" id="atcMain" style="flex:1;">Add to cart — <span class="price-inline" id="atcPrice">£54</span></button>
+        </div>
+        <button class="btn btn-ghost" id="buyNow">Buy it now</button>
+
+        <div class="pay-icons">
+          <span class="pi">Visa</span><span class="pi">MC</span><span class="pi">Amex</span><span class="pi">Pay</span><span class="pi">G Pay</span><span class="pi">Klarna</span>
+        </div>
+
+        <div class="trust-row">
+          <div class="t">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v6c0 4.5 3.3 7.8 8 9 4.7-1.2 8-4.5 8-9V6l-8-3Z"/></svg>
+            <b>Free UK delivery</b><span>Every order, no minimum.</span>
+          </div>
+          <div class="t">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <b>Ships in 3 days</b><span>Made to order, sent fast.</span>
+          </div>
+          <div class="t">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-9 9c4 0 7-1 9-9Z"/><path d="M12 3a9 9 0 0 1 9 9c-4 0-7-1-9-9Z"/><path d="M12 21V8"/></svg>
+            <b>Weather-sealed</b><span>Treated for outdoor life.</span>
+          </div>
+        </div>
+
+        <ul class="quick-benefits">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Natural bamboo — each set sounds different, every one unique</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Sealed for rain, UV, frost — built to live outside year-round</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Hand-tuned before it ships — every note is intentional</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE STRIP -->
+  <div class="strip" aria-hidden="true">
+    <div class="marquee" id="marquee">
+      <span>Handmade to order</span><span>Natural bamboo</span><span>Tuned by hand</span><span>Outdoor rated</span><span>Free UK delivery</span><span>No two the same</span>
+      <span>Handmade to order</span><span>Natural bamboo</span><span>Tuned by hand</span><span>Outdoor rated</span><span>Free UK delivery</span><span>No two the same</span>
+    </div>
+  </div>
+
+  <!-- BENEFITS -->
+  <section id="benefits" class="bg-sand">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Why RS Chimes</span>
+        <h2 class="serif">Sound that earns its place in your garden.</h2>
+        <p>Most chimes are cheap imports — thin tubes, hollow tone, gone by winter. RS Chimes are made differently: thicker bamboo, real tuning, genuine outdoor materials that age well instead of falling apart.</p>
+      </div>
+      <div class="benefits reveal">
+        <div class="benefit">
+          <span class="num">01</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <h3>Tuned by hand</h3>
+          <p>Every tube cut to pitch before it ships. Soft, resonant tones — not the chaotic clatter of untuned bamboo.</p>
+        </div>
+        <div class="benefit">
+          <span class="num">02</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+          <h3>Built for outdoors</h3>
+          <p>Weather-sealed finish that holds up to UK rain, frost, and full sun without cracking or fading.</p>
+        </div>
+        <div class="benefit">
+          <span class="num">03</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-9 9c4 0 7-1 9-9Z"/><path d="M12 3a9 9 0 0 1 9 9c-4 0-7-1-9-9Z"/><path d="M12 21V8"/></svg>
+          <h3>Natural bamboo</h3>
+          <p>Hand-selected mature cane — thick walls, dense grain, the tonal quality that plastic and thin imports can't fake.</p>
+        </div>
+        <div class="benefit">
+          <span class="num">04</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <h3>A proper gift</h3>
+          <p>Ships in a kraft box worth keeping. The kind of gift that lands well because it was clearly made — not just ordered.</p>
+        </div>
+        <div class="benefit">
+          <span class="num">05</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          <h3>No two alike</h3>
+          <p>Natural bamboo means every set has its own grain, colour, and voice. Yours is genuinely one of a kind.</p>
+        </div>
+        <div class="benefit">
+          <span class="num">06</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>
+          <h3>Garden-ready</h3>
+          <p>Arrives with a pre-tied hanging loop. Up in two minutes — no tools, no fuss, sound immediately.</p>
+        </div>
+        <div class="benefit">
+          <span class="num">07</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+          <h3>Calming tones</h3>
+          <p>The hollow resonance of mature bamboo carries differently to metal. Warmer, softer, more like the garden itself.</p>
+        </div>
+        <div class="benefit">
+          <span class="num">08</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 4v5h-5"/></svg>
+          <h3>Lasts for years</h3>
+          <p>Properly sealed bamboo doesn't rot, fade, or snap in ordinary use. One purchase, many years of sound.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The ritual · 3 steps</span>
+      <h2 class="serif">Hang it once.<br>Hear it forever.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-img">
+          <img src="images/shot-06-step1.jpg" alt="Step 1 — finding the right spot on a garden fence">
+        </div>
+        <span class="step-n">01</span>
+        <span class="step-time">~2 min · one time only</span>
+        <h3>Hang it</h3>
+        <p>Loop the pre-tied cord over any hook, nail, or branch. Fence post, pergola, doorframe — wherever the breeze moves, it works.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-img">
+          <img src="images/shot-07-step2.jpg" alt="Step 2 — adjusting tube spacing for tuning">
+        </div>
+        <span class="step-n">02</span>
+        <span class="step-time">~5 min · optional</span>
+        <h3>Tune it</h3>
+        <p>Slide the cord loops to adjust tube spacing. More gap for a softer, slower tone. Tubes closer together for a livelier ring. It's yours to dial in.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-img">
+          <img src="images/shot-08-breeze.jpg" alt="Step 3 — chimes moving in a light garden breeze">
+        </div>
+        <span class="step-n">03</span>
+        <span class="step-time">Every day · indefinitely</span>
+        <h3>Let it sound</h3>
+        <p>No batteries, no switches, no effort. The wind does everything from here. Your garden now has a voice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFESTYLE FULL-BLEED -->
+  <section class="lifestyle">
+    <img class="lifestyle-img" src="images/shot-09-fullbleed.jpg" alt="RS Chimes bamboo wind chime glowing against a UK garden sunset sky">
+    <div class="ls-inner reveal">
+      <span class="eyebrow">Made by hand</span>
+      <h2 class="serif">A garden that sounds as good as it looks.</h2>
+      <p>Not mass-produced. Not imported in bulk. Each RS Chime made by hand — cut, tuned, sealed, and sent from the same garden they were designed in.</p>
+    </div>
+  </section>
+
+  <!-- THE CRAFT -->
+  <section id="craft" class="wrap bg-sand" style="border-radius:0;">
+    <div class="craft-wrap">
+      <div class="craft-img reveal">
+        <img src="images/shot-10-craft.jpg" alt="Hands threading cord through bamboo tube on a craftsman's workbench">
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">The craft</span>
+        <h2 class="serif">Every tube matters.</h2>
+        <p class="craft-copy" style="color:var(--ink-soft);font-size:15.5px;margin-top:14px;">Cheap chimes are cut to length and shipped. RS Chimes are cut, then tested, then tuned against each other so the tones actually work together. It takes longer. It sounds better.</p>
+        <div class="craft-stats">
+          <div class="craft-stat">
+            <span class="cs-num">100%</span>
+            <div class="cs-text"><b>Natural bamboo</b><span>No composite, no filler — mature cane selected for wall thickness and grain</span></div>
+          </div>
+          <div class="craft-stat">
+            <span class="cs-num">Hand</span>
+            <div class="cs-text"><b>Tuned before it ships</b><span>Every tube checked by ear, adjusted by hand — no batch processing</span></div>
+          </div>
+          <div class="craft-stat">
+            <span class="cs-num">3×</span>
+            <div class="cs-text"><b>Sealed for the outdoors</b><span>Three coats of weather sealant — UV, rain, and frost resistance built in</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR EVERY SPACE -->
+  <section class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">One chime · every space</span>
+      <h2 class="serif">Inside or out. It fits.</h2>
+      <p>Designed for gardens but not limited to them. Anywhere the air moves, an RS Chime works.</p>
+    </div>
+    <div class="dual">
+      <div class="dual-cell reveal">
+        <img src="images/shot-11-garden.jpg" alt="RS Chimes hanging on a UK garden fence at golden hour with terrace house in background">
+        <div class="dc-body">
+          <h3>For the garden</h3>
+          <p>Fence post, pergola, apple tree — wherever the breeze finds it. The weather-seal means it stays outside year-round without any attention.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Sealed for rain, frost, and full UK sun</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Hangs from any hook or branch</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Sounds better as it weathers</li>
+          </ul>
+        </div>
+      </div>
+      <div class="dual-cell reveal">
+        <img src="images/shot-12-window.jpg" alt="RS Chimes silhouetted in a bright indoor window with warm morning light">
+        <div class="dc-body">
+          <h3>For the home</h3>
+          <p>Porch, hallway, bedroom window — gentle indoor air is enough. The natural tones and finish make it a piece worth looking at, not just listening to.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Soft enough for indoor use</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Natural finish suits any interior</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>Ships gift-ready in kraft box</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section class="wrap bg-sand">
+    <div class="incl-grid">
+      <div class="incl-img reveal">
+        <img src="images/shot-13-kit.jpg" alt="RS Chimes full kit flat-lay — bamboo tubes, coconut cap, cord and care card on linen">
+      </div>
+      <div class="reveal">
+        <div class="sec-head" style="margin-bottom:6px;">
+          <span class="eyebrow">In the box</span>
+          <h2 class="serif" style="font-size:clamp(28px,3.6vw,40px);">Everything ready to hang.</h2>
+        </div>
+        <div class="incl-list">
+          <div class="incl-item">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+            <div><h4>Bamboo tubes (6–8 per set)</h4><p>Hand-selected mature cane, cut to pitch, sealed for outdoor life. No two sets identical.</p></div>
+          </div>
+          <div class="incl-item">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="5" r="3"/><path d="M12 8v8M8 21h8"/></svg></div>
+            <div><h4>Coconut shell cap</h4><p>Natural striker and cap — the piece the wind catches. Weighted for responsive, even movement.</p></div>
+          </div>
+          <div class="incl-item">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18M3 6l9-3 9 3M3 18l9 3 9-3"/></svg></div>
+            <div><h4>UV-resistant hanging cord</h4><p>Pre-tied top loop — hang immediately, no tools needed. Won't rot or stiffen outdoors.</p></div>
+          </div>
+          <div class="incl-item">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+            <div><h4>Care &amp; tuning card</h4><p>How to adjust tube spacing for softer or livelier tones, plus seasonal care notes for outdoor sets.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">847 verified reviews</span>
+      <h2 class="serif">Gardens that finally have a sound.</h2>
+    </div>
+    <div class="rev-summary reveal">
+      <div class="rev-score">
+        <div class="big">4.9</div>
+        <div class="s" id="bigStars"></div>
+        <small>Based on 847 verified buyers</small>
+      </div>
+      <div class="rev-bars">
+        <div class="rev-bar"><span>5 stars</span><div class="track"><div class="fill" style="width:91%"></div></div><span>91%</span></div>
+        <div class="rev-bar"><span>4 stars</span><div class="track"><div class="fill" style="width:7%"></div></div><span>7%</span></div>
+        <div class="rev-bar"><span>3 stars</span><div class="track"><div class="fill" style="width:1.5%"></div></div><span>2%</span></div>
+        <div class="rev-bar"><span>2 stars</span><div class="track"><div class="fill" style="width:0.5%"></div></div><span>0%</span></div>
+        <div class="rev-bar"><span>1 star</span><div class="track"><div class="fill" style="width:0.2%"></div></div><span>0%</span></div>
+      </div>
+    </div>
+    <div class="rev-cards">
+      <div class="rev-card reveal">
+        <div class="verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7"/></svg>Verified buyer</div>
+        <div class="s"></div>
+        <p class="q">"Been through two winters already. Still sounds exactly the same. Most garden things I've bought don't last one."</p>
+        <div class="who"><span class="av">SR</span><div><b>Sarah R.</b><span>Garden Pair · 2 winters in</span></div></div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7"/></svg>Verified buyer</div>
+        <div class="s"></div>
+        <p class="q">"Bought as a gift for my mum. She rang me the same day to say it was the best thing I'd ever given her. Ordering another for myself."</p>
+        <div class="who"><span class="av">TM</span><div><b>Tom M.</b><span>The Single · gifted</span></div></div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7"/></svg>Verified buyer</div>
+        <div class="s"></div>
+        <p class="q">"The tone is completely different to anything I've heard from a garden centre. Softer, fuller. Actual music, not just noise."</p>
+        <div class="who"><span class="av">PK</span><div><b>Priya K.</b><span>Full Set · daily listener</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="wrap bg-sand">
+    <div class="sec-head reveal">
+      <span class="eyebrow">RS Chimes vs. the alternatives</span>
+      <h2 class="serif">Not all bamboo is the same.</h2>
+    </div>
+    <div class="compare reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th class="us">RS Chimes</th>
+            <th>Garden centre chimes</th>
+            <th>Online imports</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feat">Hand-tuned tones</td><td class="col-us"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 13 4 4L19 7"/></svg></td><td class="no">Rarely</td><td class="no">Never</td></tr>
+          <tr><td class="feat">Weather-sealed finish</td><td class="col-us"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 13 4 4L19 7"/></svg></td><td class="no">Sometimes</td><td class="no">—</td></tr>
+          <tr><td class="feat">Mature bamboo cane</td><td class="col-us"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 13 4 4L19 7"/></svg></td><td class="no">Varies</td><td class="no">Unlikely</td></tr>
+          <tr><td class="feat">Lasts multiple winters</td><td class="col-us"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 13 4 4L19 7"/></svg></td><td class="no">1–2 seasons</td><td class="no">Under 1 season</td></tr>
+          <tr><td class="feat">Gift-ready packaging</td><td class="col-us"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 13 4 4L19 7"/></svg></td><td class="no">Plastic bag</td><td class="no">Brown box</td></tr>
+          <tr><td class="feat">Made to order</td><td class="col-us"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 13 4 4L19 7"/></svg></td><td class="no">—</td><td class="no">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY -->
+  <section class="wrap" id="gallery">
+    <div class="sec-head reveal">
+      <span class="eyebrow">In the garden</span>
+      <h2 class="serif">Every one unique.<br>Every one yours.</h2>
+    </div>
+    <div class="photo-gallery reveal">
+      <div class="pg-grid">
+        <div class="pg-item">
+          <img src="images/shot-03-dusk.jpg" alt="RS Chimes hanging from pergola at dusk">
+        </div>
+        <div class="pg-item">
+          <img src="images/shot-04-cap.jpg" alt="Coconut shell cap and cord knot macro">
+        </div>
+        <div class="pg-item">
+          <img src="images/shot-09-fullbleed.jpg" alt="Bamboo chime backlit against sunset sky">
+        </div>
+        <div class="pg-item">
+          <img src="images/gallery-texture.jpg" alt="Bamboo tube grain and cord detail close-up">
+        </div>
+        <div class="pg-item">
+          <img src="images/shot-05-flatlay.jpg" alt="RS Chimes full set laid out on natural linen">
+        </div>
+        <div class="pg-item">
+          <img src="images/gallery-product.jpg" alt="RS Chimes in a real garden setting">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="wrap">
+    <div class="sec-head reveal" style="text-align:center; margin:0 auto;">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="serif">Questions, answered.</h2>
+    </div>
+    <div class="faq" id="faqEl">
+      <div class="faq-item">
+        <button class="faq-q">Will it survive a UK winter outside? <span class="pm"></span></button>
+        <div class="faq-a"><p>Yes — that's a design requirement, not a nice-to-have. Every RS Chime gets three coats of exterior-grade sealant before it ships. We've had sets through multiple winters without cracking, splitting, or losing tone. Bamboo that's properly sealed and naturally thick-walled handles frost, rain, and UV without issue.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How loud is it? Will it disturb my neighbours? <span class="pm"></span></button>
+        <div class="faq-a"><p>Bamboo is naturally softer and more mellow than metal or ceramic. In a light breeze it produces a quiet, hollow resonance — pleasant at garden distance, not intrusive at fence distance. In strong wind it's louder but still warm in tone. If you're fence-close to neighbours, hanging it on the house side of the garden keeps the sound facing inward.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I adjust the tuning myself? <span class="pm"></span></button>
+        <div class="faq-a"><p>Yes — that's the point of the included care card. Sliding the tubes along the cord changes spacing, which changes how they interact and ring. Tubes spaced wider apart produce a slower, more considered tone. Closer together gives a livelier, more layered sound. It takes five minutes and no tools.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is this a good gift? How does it arrive? <span class="pm"></span></button>
+        <div class="faq-a"><p>It's one of our most-gifted products. Every set ships in a kraft gift box with the care and tuning card inside — no extra wrapping needed. If you're ordering as a gift, leave a note at checkout and we'll include a handwritten message card.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How long until it arrives? <span class="pm"></span></button>
+        <div class="faq-a"><p>Each set is made to order and ships within 3 working days. UK delivery typically takes 2–3 days after dispatch — most orders arrive within a week. You'll get a dispatch notification with tracking when yours leaves.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What if I'm not happy with it? <span class="pm"></span></button>
+        <div class="faq-a"><p>If it's not right, message us and we'll sort it. Replacement, refund, or exchange — your call. We make each set by hand and we stand behind every one of them.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="wrap">
+      <span class="eyebrow">Launch offer · ends soon</span>
+      <h2 class="serif">Your garden<br>deserves a voice.</h2>
+      <p>Handmade. Hand-tuned. Weather-sealed. The chime you hang once and hear for years — backed by free UK delivery and a no-quibble guarantee.</p>
+      <div class="offer">Offer ends in <span class="countdown" id="countdown">11:59:42</span> · <b>25% off + free delivery</b></div>
+      <div><button class="btn btn-primary" id="atcFinal">Order yours — from £34</button></div>
+      <small>Free UK delivery · Made to order · Ships in 3 days</small>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="brand">RS Chimes<span class="tm">™</span></span>
+        <p>Handmade bamboo wind chimes. Made in the UK, built for outdoors.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <a href="#top">Bamboo Wind Chime</a>
+        <a href="#top">The Garden Pair</a>
+        <a href="#top">The Full Set</a>
+        <a href="#top">Gift cards</a>
+      </div>
+      <div class="foot-col">
+        <h5>Help</h5>
+        <a href="#how">How to hang</a>
+        <a href="#faq">FAQ</a>
+        <a href="#top">Delivery &amp; returns</a>
+        <a href="#top">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h5>RS Chimes</h5>
+        <a href="#top">Our story</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#top">The craft</a>
+        <a href="#top">Journal</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 RS Chimes™. All rights reserved.</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky ATC -->
+<div class="sticky-atc" id="stickyAtc">
+  <div class="sticky-inner">
+    <div class="sticky-prod">
+      <div class="sp-img">
+        <img src="images/shot-01-hero.jpg" alt="RS Chimes bamboo wind chime">
+      </div>
+      <div class="sp-meta">
+        <b>RS Chimes™ Bamboo Wind Chime</b>
+        <span class="sp-price"><span id="stickyPrice">£54</span> <s>£92</s> · <span id="stickyKit">The Garden Pair</span></span>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="atcSticky">Add to cart</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <div class="tk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 13 4 4L19 7"/></svg></div>
+  <div>
+    <b>Added to cart</b>
+    <p id="toastMsg">The Garden Pair · Natural</p>
+    <a href="#top">Checkout now →</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var starSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.6 5.7 6.2.7-4.6 4.2 1.2 6.1L12 16.9 6.6 19.3l1.2-6.1L3.2 9l6.2-.7L12 2.6Z"/></svg>';
+  function fillStars(el,n){ if(el) el.innerHTML = starSVG.repeat(n||5); }
+  document.querySelectorAll('.stars .s, .rev-card .s, #bigStars').forEach(function(el){ fillStars(el,5); });
+
+  var state = { price:54, each:27, kit:'The Garden Pair', color:'Natural', qty:1 };
+  function money(n){ return '£'+n; }
+  function refresh(){
+    var total = state.price * state.qty;
+    document.getElementById('priceNow').textContent = money(state.each);
+    document.getElementById('atcPrice').textContent = money(total);
+    document.getElementById('stickyPrice').textContent = money(total);
+    document.getElementById('stickyKit').textContent = state.kit;
+    document.getElementById('swatchNote').textContent = state.color;
+  }
+
+  document.querySelectorAll('#bundles .bundle').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('#bundles .bundle').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      state.price = parseFloat(b.dataset.price);
+      state.each = parseFloat(b.dataset.each);
+      state.kit = b.dataset.name;
+      document.getElementById('bundleNote').textContent = 'Selected: '+state.kit;
+      refresh();
+    });
+  });
+
+  document.querySelectorAll('#swatches .swatch').forEach(function(s){
+    s.addEventListener('click', function(){
+      document.querySelectorAll('#swatches .swatch').forEach(function(x){ x.classList.remove('active'); });
+      s.classList.add('active');
+      state.color = s.dataset.name;
+      refresh();
+    });
+  });
+
+  var qVal = document.getElementById('qVal');
+  function clampQty(){ var v=parseInt(qVal.value,10); if(isNaN(v)||v<1) v=1; if(v>9) v=9; qVal.value=v; state.qty=v; refresh(); }
+  document.getElementById('qMinus').addEventListener('click',function(){ qVal.value=Math.max(1,(parseInt(qVal.value,10)||1)-1); clampQty(); });
+  document.getElementById('qPlus').addEventListener('click',function(){ qVal.value=Math.min(9,(parseInt(qVal.value,10)||1)+1); clampQty(); });
+  qVal.addEventListener('change',clampQty);
+
+  /* Gallery thumb switching — swap img src */
+  var galleryMain = document.getElementById('galleryMain');
+  document.querySelectorAll('#thumbs .thumb').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('#thumbs .thumb').forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      var src = t.dataset.src;
+      var label = t.dataset.label;
+      galleryMain.innerHTML = '<img src="'+src+'" alt="'+label+'" style="width:100%;height:100%;object-fit:cover;">';
+    });
+  });
+
+  var cartCount=0, toast=document.getElementById('toast'), toastTimer;
+  function addToCart(){
+    cartCount+=state.qty;
+    document.getElementById('cartCount').textContent=cartCount;
+    document.getElementById('toastMsg').textContent=state.kit+' · '+state.color+(state.qty>1?' · Qty '+state.qty:'');
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ toast.classList.remove('show'); },3800);
+  }
+  var stripeLinks = {
+    34: 'https://buy.stripe.com/cNicN788J1YP1Dlg6R5wI04',
+    54: 'https://buy.stripe.com/7sY00l3StfPFfubaMx5wI02',
+    75: 'https://buy.stripe.com/3cI8wR3St32Tdm307T5wI03'
+  };
+  function goToCheckout(){
+    var link = stripeLinks[state.price];
+    if(link) window.location.href = link;
+  }
+  ['atcMain','buyNow','atcSticky','atcFinal'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.addEventListener('click',goToCheckout);
+  });
+  document.getElementById('cartBtn').addEventListener('click',function(){
+    if(cartCount>0){ toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ toast.classList.remove('show'); },3000); }
+  });
+
+  var sticky=document.getElementById('stickyAtc'), atcMain=document.getElementById('atcMain');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ sticky.classList.remove('show'); }
+        else if(e.boundingClientRect.top<0){ sticky.classList.add('show'); }
+      });
+    },{threshold:0}).observe(atcMain);
+  }
+
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.parentElement, a=item.querySelector('.faq-a'), open=item.classList.contains('open');
+      if(open){ item.classList.remove('open'); a.style.maxHeight=0; }
+      else { item.classList.add('open'); a.style.maxHeight=a.scrollHeight+'px'; }
+    });
+  });
+
+  var cd=document.getElementById('countdown'), end=Date.now()+(11*3600+59*60+42)*1000;
+  function tick(){
+    var diff=Math.max(0,end-Date.now()),h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    function p(n){ return (n<10?'0':'')+n; }
+    if(cd) cd.textContent=p(h)+':'+p(m)+':'+p(s);
+  }
+  tick(); setInterval(tick,1000);
+
+  if('IntersectionObserver' in window){
+    var ro=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+    },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  refresh();
+})();
+</script>
+</body>
+</html>
